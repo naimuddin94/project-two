@@ -1,7 +1,12 @@
-import { Router } from "express";
-import { createStudent } from "./student.controller";
+import { Router } from 'express';
+import { studentController } from './student.controller';
 
+const router = Router();
 
-const studentRoute = Router();
+router.route('/create-student').post(studentController.createStudent);
 
-studentRoute.route('/create-student').post(createStudent);
+router.route('/').get(studentController.fetchedStudents);
+
+router.route('/:id').get(studentController.fetchedSingleStudent);
+
+export const studentRoute = router;
