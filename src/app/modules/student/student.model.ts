@@ -21,6 +21,10 @@ const GuardianSchema = new Schema<IGuardian>({
 });
 
 const StudentSchema = new Schema<IStudent>({
+  id: {
+    type: String,
+    required: true,
+  },
   name: {
     firstName: {
       type: String,
@@ -33,6 +37,8 @@ const StudentSchema = new Schema<IStudent>({
   },
   email: {
     type: String,
+    unique: true,
+    lowercase: true,
     required: true,
   },
   dateOfBirth: {
