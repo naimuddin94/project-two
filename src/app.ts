@@ -1,27 +1,25 @@
-import cors from "cors";
-import express, { Application, NextFunction, Request, Response } from "express";
+import cors from 'cors';
+import express, { Application, NextFunction, Request, Response } from 'express';
+import { studentRoute } from './app/modules/student/student.route';
+import { globalErrorHandler } from './lib';
 
 const app: Application = express();
 
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req: Request, res: Response) => {
-  const a = 56;
-  res.send("server is running 🚀" + a);
+app.get('/', (req: Request, res: Response) => {
+  res.send('server is running 🚀');
 });
 
-app.all("*", (req: Request, res: Response, next: NextFunction) => {
-  const error= new Error(`can't find ${req.originalUrl} on the server`);
+// application routes
+app.use('/api/v1/students', studentRoute);
+
+app.all('*', (req: Request, res: Response, next: NextFunction) => {
+  const error = new Error(`can't find ${req.originalUrl} on the server`);
   next(error);
 });
 
-app.use((error: Error, req: Request, res: Response) => {
-  if (error) {
-    res
-      .status(500)
-      .json({ success: false, message: error.message, stack: error.stack });
-  }
-});
+app.use(globalErrorHandler);
 
 export default app;
