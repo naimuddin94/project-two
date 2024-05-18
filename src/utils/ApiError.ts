@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 class ApiError extends Error {
   public data: null;
   public success: boolean;
   constructor(
     public status: number,
     public message: string = 'Something went wrong',
-    public errors: string[] = [],
+    public errors: any[] = [],
     public stack: string = '',
   ) {
     super(message);
